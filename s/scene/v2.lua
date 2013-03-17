@@ -7,7 +7,7 @@ function v2_OnStart ()
 
 	-- 1.まず画像を読み込む
 	G.background   = loadGraphic("gfx/Bg_v2.png");
-	G.frame1       = loadGraphic("gfx/メッセージ窓.png");
+	G.frame1       = loadGraphic("gfx/Window1.png");
 
 	-- 1.5.フォントを読み込む
 	F.font1    = createTextureFont("font/font.lfd", ".png", false);
