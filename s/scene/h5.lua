@@ -1,10 +1,11 @@
 function h5_OnStart ()
-	viewHead   = 0
-	cursorCur  = 2
-	cursorFirst= 0
-	cursorLast = 4
-	data = { "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ",
-				"Ｈ", "Ｉ", "Ｊ", "Ｋ", "Ｌ", "Ｍ", "Ｎ" }
+	-- 1.欄
+	VIEW_FIRST = 0		-- カーソル移動範囲の先頭の番地。
+	VIEW_CURSOR= 2		-- カーソルがある番地。固定。
+	-- 2.内容の表示位置
+	viewHead   = 0		-- 欄の先頭番地に表示されているデータの番地。
+	-- 3.内容
+	data = { "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ" }
 
 	-- 1.まず画像を読み込む
 	G.background   = loadGraphic("gfx/Bg_h5.png");
@@ -43,7 +44,7 @@ function h5_OnStep ()
     if( 1 == getJoyPressCount( BUTTON_RIGHT ) ) then
     	--→ボタン（ドラムロール末尾止まり）
     	--境界内チェック
-    	if( viewHead < #data - cursorCur - 1 )then
+    	if( viewHead < #data - VIEW_CURSOR - 1 )then
 	    	viewHead = viewHead + 1
 	   		flg_Head = 1
     	end
@@ -52,7 +53,7 @@ function h5_OnStep ()
     if( 1 == getJoyPressCount( BUTTON_LEFT ) ) then
 	    --←ボタン（ドラムロール先頭止まり）
     	--境界内チェック
-    	if( 0 - cursorCur < viewHead )then
+    	if( 0 - VIEW_CURSOR < viewHead )then
 	    	viewHead = viewHead - 1
 	   		flg_Head = 1
     	end
@@ -73,7 +74,7 @@ function h5_OnStep ()
 	-- 2.アクター動作部
 
     if( flg_Cursor==1 )then
-    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, (cursorCur+8)*32-32/2, 4*32 )
+    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, (VIEW_CURSOR+8)*32-32/2, 4*32 )
     end
 
     if( flg_Head==1 )then

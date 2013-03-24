@@ -1,10 +1,15 @@
 function v5_OnStart ()
-	viewHead   = 0
-	cursorCur  = 2
-	cursorFirst= 0
-	cursorLast = 4
-	data = { "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ",
-				"Ｈ", "Ｉ", "Ｊ", "Ｋ", "Ｌ", "Ｍ", "Ｎ" }
+	-- 1.欄
+	VIEW_CURSOR= 2		-- カーソルがある番地。固定。
+	-- 2.内容の表示位置
+	viewHead   = 0		-- 欄の先頭番地に表示されているデータの番地。
+	-- 3.内容
+	data = { "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ" }
+	-- 4.欄の表示位置
+	viewX     = 17*32
+	viewY     = 5* 32
+	viewWidth =  4    * 32
+	viewHeight=  5.5  * 32
 
 	-- 1.まず画像を読み込む
 	G.background   = loadGraphic("gfx/Bg_v5.png");
@@ -17,7 +22,7 @@ function v5_OnStart ()
 	--     レイヤー番号は0から11までの12枚で、数字が大きいほど上になります。
 	--     後から追加したシーンは、前に追加したシーンよりも上になります。
 	A.background   = createActor(G.background, 640/2,   480/2     ,  8);
-	A.frame1       = createActor(G.frame1    , 640/2, 6* 32  +32/2, 11);
+	A.frame1       = createActor(G.frame1    , viewX, viewY, 11);
 	
 	-- 2.5.アクターに 9patch をセットします。
    	--タイトルメニュー
@@ -26,14 +31,14 @@ function v5_OnStart ()
 	--     cut9PatchGraphic2(        g, x, y,  w,  h, w_left, h_top, w_right, h_bottom)
 	tbl1 = cut9PatchGraphic2( G.frame1, 0, 0, 64, 64,      8,     8,       8,        8)
 	set9patchGraphic( A.frame1, tbl1 )
-   	addMover( A.frame1, -1, 50, MOVER_SETZOOM, 400, 176+32 )
+   	addMover( A.frame1, -1, 50, MOVER_SETZOOM, viewWidth, viewHeight )
    	
-	A.cursor1= createTextActor( F.font1, "→"     , 640/2 - 1*32,  6  *32  , 11 );
-	A.msg1   = createTextActor( F.font1, data[1], 640/2       ,  4  *32  , 11 );
-	A.msg2   = createTextActor( F.font1, data[2], 640/2       ,  5  *32  , 11 );
-	A.msg3   = createTextActor( F.font1, data[3], 640/2       ,  6  *32  , 11 );
-	A.msg4   = createTextActor( F.font1, data[4], 640/2       ,  7  *32  , 11 );
-	A.msg5   = createTextActor( F.font1, data[5], 640/2       ,  8  *32  , 11 );
+	A.cursor1= createTextActor( F.font1, "→"   , viewX - 1*32,  viewY-32/2, 11 );
+	A.msg1   = createTextActor( F.font1, data[1], viewX       ,  viewY-2*32-32/2  , 11 );
+	A.msg2   = createTextActor( F.font1, data[2], viewX       ,  viewY-1*32-32/2  , 11 );
+	A.msg3   = createTextActor( F.font1, data[3], viewX       ,  viewY+0*32-32/2  , 11 );
+	A.msg4   = createTextActor( F.font1, data[4], viewX       ,  viewY+1*32-32/2  , 11 );
+	A.msg5   = createTextActor( F.font1, data[5], viewX       ,  viewY+2*32-32/2  , 11 );
 end
 
 function v5_OnStep ()
@@ -43,7 +48,7 @@ function v5_OnStep ()
     if( 1 == getJoyPressCount( BUTTON_DOWN ) ) then
     	--↓ボタン（ドラムロール末尾止まり）
     	--境界内チェック
-    	if( viewHead < #data - cursorCur - 1 )then
+    	if( viewHead < #data - VIEW_CURSOR - 1 )then
 	    	viewHead = viewHead + 1
 	   		flg_Head = 1
     	end
@@ -52,7 +57,7 @@ function v5_OnStep ()
     if( 1 == getJoyPressCount( BUTTON_UP ) ) then
 	    --↑ボタン（ドラムロール先頭止まり）
     	--境界内チェック
-    	if( 0 - cursorCur < viewHead )then
+    	if( 0 - VIEW_CURSOR < viewHead )then
 	    	viewHead = viewHead - 1
 	   		flg_Head = 1
     	end
@@ -77,35 +82,35 @@ function v5_OnStep ()
 			vanish(A.msg1);
 		end
 		if( 1 <= viewHead+1 and viewHead+1 <= #data)then
-			A.msg1   = createTextActor( F.font1, data[viewHead+1], 640/2       ,  4  *32  , 11 );
+			A.msg1   = createTextActor( F.font1, data[viewHead+1], viewX       ,  viewY-2*32-32/2  , 11 );
 		end
 
 		if(isAlive(A.msg2))then
 			vanish(A.msg2);
 		end
 		if( 1 <= viewHead+2 and viewHead+2 <= #data)then
-			A.msg2   = createTextActor( F.font1, data[viewHead+2], 640/2       ,  5  *32  , 11 );
+			A.msg2   = createTextActor( F.font1, data[viewHead+2], viewX       ,  viewY-1*32-32/2  , 11 );
 		end
 		
 		if(isAlive(A.msg3))then
 			vanish(A.msg3);
 		end
 		if( 1 <= viewHead+3 and viewHead+3 <= #data)then
-			A.msg3   = createTextActor( F.font1, data[viewHead+3], 640/2       ,  6  *32  , 11 );
+			A.msg3   = createTextActor( F.font1, data[viewHead+3], viewX       ,  viewY+0*32-32/2  , 11 );
 		end
 		
 		if(isAlive(A.msg4))then
 			vanish(A.msg4);
 		end
 		if( 1 <= viewHead+4 and viewHead+4 <= #data)then
-			A.msg4   = createTextActor( F.font1, data[viewHead+4], 640/2       ,  7  *32  , 11 );
+			A.msg4   = createTextActor( F.font1, data[viewHead+4], viewX       ,  viewY+1*32-32/2  , 11 );
 		end
 		
 		if(isAlive(A.msg5))then
 			vanish(A.msg5);
 		end
 		if( 1 <= viewHead+5 and viewHead+5 <= #data)then
-			A.msg5   = createTextActor( F.font1, data[viewHead+5], 640/2       ,  8  *32  , 11 );
+			A.msg5   = createTextActor( F.font1, data[viewHead+5], viewX       ,  viewY+2*32-32/2  , 11 );
 		end
     end
 

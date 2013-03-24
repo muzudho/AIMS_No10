@@ -1,10 +1,13 @@
 function h3_OnStart ()
-	viewHead   = 0
-	cursorCur  = 0
-	cursorFirst= 0
-	cursorLast = 3
+	-- 1.欄
+	VIEW_FIRST= 0		-- カーソル移動範囲の先頭の番地。
+	viewCursor= 0		-- カーソルがある番地。
+	VIEW_LAST = 3		-- カーソル移動範囲の末尾の番地。
+	-- 2.内容の表示位置
+	viewHead  = 0		-- 欄の先頭番地に表示されているデータの番地。
+	-- 3.内容
 	data = { "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ",
-				"Ｈ", "Ｉ", "Ｊ", "Ｋ", "Ｌ", "Ｍ", "Ｎ" }
+			 "Ｈ", "Ｉ", "Ｊ", "Ｋ", "Ｌ", "Ｍ", "Ｎ" }
 
 	-- 1.まず画像を読み込む
 	G.background   = loadGraphic("gfx/Bg_h3.png");
@@ -34,7 +37,7 @@ function h3_OnStart ()
 	A.msg3   = createTextActor( F.font1, data[3], 10*32,  5*32  , 11 );
 	A.msg4   = createTextActor( F.font1, data[4], 11*32,  5*32  , 11 );
 	--ページ数
-	str = currentPage( 1, cursorFirst, cursorLast, cursorCur+viewHead ) .."／".. totalPage( cursorFirst, cursorLast, #data)
+	str = currentPage( 1, VIEW_LAST, viewCursor+viewHead ) .."／".. totalPage( VIEW_LAST, #data)
 	strw= getTextWidth(F.font1, str, false);
 	A.msg5   = createTextActor( F.font1, str    , 640/2-strw/2,  6*32  , 11 );
 end
@@ -46,8 +49,8 @@ function h3_OnStep ()
     if( 1 == getJoyPressCount( BUTTON_DOWN ) ) then
     	--↓ボタン（次ページ・端止まり）
     	--境界内チェック
-    	if( currentPage( 1, cursorFirst, cursorLast, cursorCur+viewHead + (cursorLast - cursorFirst + 1) ) <= totalPage( cursorFirst, cursorLast, #data) )then
-	    	viewHead = viewHead + (cursorLast - cursorFirst + 1)
+    	if( currentPage( 1, VIEW_LAST, viewCursor+viewHead + (VIEW_LAST + 1) ) <= totalPage( VIEW_LAST, #data) )then
+	    	viewHead = viewHead + (VIEW_LAST + 1)
 			flg_Head = 1
     	end
     end
@@ -55,8 +58,8 @@ function h3_OnStep ()
     if( 1 == getJoyPressCount( BUTTON_RIGHT ) ) then
     	--→ボタン（端止まり）
     	--境界内チェック
-    	if( cursorCur < cursorLast )then
-	    	cursorCur = cursorCur + 1
+    	if( viewCursor < VIEW_LAST )then
+	    	viewCursor = viewCursor + 1
 	   		flg_Cursor = 1
     	end
     end
@@ -64,8 +67,8 @@ function h3_OnStep ()
     if( 1 == getJoyPressCount( BUTTON_UP ) ) then
     	--↑ボタン（前ページ・端止まり）
     	--境界内チェック
-    	if( 1 <= currentPage( 1, cursorFirst, cursorLast, cursorCur + viewHead - (cursorLast - cursorFirst + 1) ) )then
-	    	viewHead = viewHead - (cursorLast - cursorFirst + 1)
+    	if( 1 <= currentPage( 1, VIEW_LAST, viewCursor + viewHead - (VIEW_LAST + 1) ) )then
+	    	viewHead = viewHead - (VIEW_LAST + 1)
 			flg_Head = 1
     	end
     end
@@ -73,8 +76,8 @@ function h3_OnStep ()
     if( 1 == getJoyPressCount( BUTTON_LEFT ) ) then
 	    --←ボタン（端止まり）
     	--境界内チェック
-    	if( cursorFirst < cursorCur )then
-	    	cursorCur = cursorCur - 1
+    	if( VIEW_FIRST < viewCursor )then
+	    	viewCursor = viewCursor - 1
 	   		flg_Cursor = 1
     	end
     end
@@ -94,7 +97,7 @@ function h3_OnStep ()
 	-- 2.アクター動作部
 
     if( flg_Cursor==1 )then
-    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, (cursorCur+8)*32, 4*32 )
+    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, (viewCursor+8)*32, 4*32 )
     end
 
     if( flg_Head==1 )then
@@ -130,7 +133,7 @@ function h3_OnStep ()
 		if(isAlive(A.msg5))then
 			vanish(A.msg5);
 		end
-		str = currentPage( 1, cursorFirst, cursorLast, cursorCur+viewHead ) .."／".. totalPage( cursorFirst, cursorLast, #data)
+		str = currentPage( 1, VIEW_LAST, viewCursor+viewHead ) .."／".. totalPage( VIEW_LAST, #data)
 		strw= getTextWidth(F.font1, str, false);
 		A.msg5   = createTextActor( F.font1, str    , 640/2-strw/2,  6*32  , 11 );
     end

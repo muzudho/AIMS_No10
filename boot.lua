@@ -49,6 +49,16 @@ prequire("s/scene/h3.lua");
 prequire("s/scene/h4.lua");
 prequire("s/scene/h5.lua");
 prequire("s/scene/h6.lua");
+prequire("s/scene/t0.lua");
+prequire("s/scene/t1.lua");
+prequire("s/scene/t2.lua");
+prequire("s/scene/t3.lua");
+prequire("s/scene/t4.lua");
+prequire("s/scene/t5.lua");
+prequire("s/scene/t6.lua");
+prequire("s/scene/t7.lua");
+prequire("s/scene/t8.lua");
+prequire("s/scene/t9.lua");
 --Åy/â¸ïœÅz
 
 -------------------------------------------

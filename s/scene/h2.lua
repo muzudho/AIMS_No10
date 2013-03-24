@@ -1,8 +1,11 @@
 function h2_OnStart ()
-	viewHead   = 0
-	cursorCur  = 0
-	cursorFirst= 0
-	cursorLast = 3
+	-- 1.欄
+	VIEW_FIRST= 0		-- カーソル移動範囲の先頭の番地。
+	viewCursor= 0		-- カーソルがある番地。
+	VIEW_LAST = 3		-- カーソル移動範囲の末尾の番地。
+	-- 2.内容の表示位置
+	viewHead  = 0		-- 欄の先頭番地に表示されているデータの番地。
+	-- 3.内容
 	data = { "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ" }
 
 	-- 1.まず画像を読み込む
@@ -41,11 +44,13 @@ function h2_OnStep ()
     if( 1 == getJoyPressCount( BUTTON_RIGHT ) ) then
     	--→ボタン（端止まり／スクロール）
     	--境界内チェック
-    	if( cursorCur < cursorLast )then
-	    	cursorCur = cursorCur + 1
+    	if( viewCursor < VIEW_LAST )then
+	    	viewCursor = viewCursor + 1
 	   		flg_Cursor = 1
 	    else
-	    	if( viewHead < #data - cursorLast - 1 )then
+	    	--端止まり
+	    	if( viewHead < #data - VIEW_LAST - 1 )then
+	    		--スクロール
 		    	viewHead = viewHead + 1
 		    	flg_Head = 1
 		    end
@@ -55,11 +60,13 @@ function h2_OnStep ()
     if( 1 == getJoyPressCount( BUTTON_LEFT ) ) then
 	    --←ボタン（端止まり／スクロール）
     	--境界内チェック
-    	if( cursorFirst < cursorCur )then
-	    	cursorCur = cursorCur - 1
+    	if( VIEW_FIRST < viewCursor )then
+	    	viewCursor = viewCursor - 1
 	   		flg_Cursor = 1
 	    else
-	    	if( cursorFirst < viewHead )then
+	    	--端止まり
+	    	if( 0 < viewHead )then
+	    		--スクロール
 		    	viewHead = viewHead - 1
 		    	flg_Head = 1
 		    end
@@ -81,7 +88,7 @@ function h2_OnStep ()
 	-- 2.アクター動作部
 
     if( flg_Cursor==1 )then
-    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, (cursorCur+8)*32, 4*32 )
+    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, (viewCursor+8)*32, 4*32 )
     end
 
     if( flg_Head==1 )then

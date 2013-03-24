@@ -17,20 +17,20 @@ function rotateAdd( min, max, cur, offset )
 end
 
 --
--- ページを 1、2、3…と数えるとし、
+-- ページを 1、2、3…と 1 から数えるとし、
 -- 0 ～ 4 の番地をカーソルが動くとき、
 -- カーソルが 10番地 のデータを指しているときは 3 ページにあると言えます。
--- 3 == currentPage( 1, 0, 4, 10 )
+-- 3 == currentPage( 1, 4, 10 )
 --
-function currentPage( pageFirst, cursorFirst, cursorLast, pointedData )
-	return math.floor( pointedData / (cursorLast - cursorFirst + 1) ) + pageFirst
+function currentPage( pageFirst, viewLast, dataCursor )
+	return math.floor( dataCursor / (viewLast + 1) ) + pageFirst
 end
 
 --
 -- 0 ～ 4 の番地をカーソルが動くとき、
 -- 10 のアイテムがある場合は、合計 2 ページ と言えます。
--- 2 == totalPage( 0, 4, 10 )
+-- 2 == totalPage( 4, 10 )
 --
-function totalPage( cursorFirst, cursorLast, itemNumber )
-	return math.ceil( itemNumber / (cursorLast - cursorFirst + 1) )
+function totalPage( viewLast, items )
+	return math.ceil( items / (viewLast + 1) )
 end
