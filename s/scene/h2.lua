@@ -7,6 +7,11 @@ function h2_OnStart ()
 	viewHead  = 0		-- 欄の先頭番地に表示されているデータの番地。
 	-- 3.内容
 	data = { "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ" }
+	-- 4.欄の表示位置
+	viewX     = 15  * 32
+	viewY     =  9  * 32
+	viewWidth =  5  * 32
+	viewHeight=  3.5* 32
 
 	-- 1.まず画像を読み込む
 	G.background   = loadGraphic("gfx/Bg_h2.png");
@@ -18,8 +23,8 @@ function h2_OnStart ()
 	-- 2.アクターを表示する。
 	--     レイヤー番号は0から11までの12枚で、数字が大きいほど上になります。
 	--     後から追加したシーンは、前に追加したシーンよりも上になります。
-	A.background   = createActor(G.background, 640/2,   480/2,  8);
-	A.frame1       = createActor(G.frame1    , 640/2, 6* 32  , 11);
+	A.background   = createActor(G.background, 640/2, 480/2,  8);
+	A.frame1       = createActor(G.frame1    , viewX, viewY, 11);
 	
 	-- 2.5.アクターに 9patch をセットします。
    	--タイトルメニュー
@@ -28,13 +33,13 @@ function h2_OnStart ()
 	--     cut9PatchGraphic2(        g, x, y,  w,  h, w_left, h_top, w_right, h_bottom)
 	tbl1 = cut9PatchGraphic2( G.frame1, 0, 0, 64, 64,      8,     8,       8,        8)
 	set9patchGraphic( A.frame1, tbl1 )
-   	addMover( A.frame1, -1, 50, MOVER_SETZOOM, 176, 200 )
+   	addMover( A.frame1, -1, 50, MOVER_SETZOOM, viewWidth, viewHeight )
    	
-	A.cursor1= createTextActor( F.font1, "↓"   ,  8*32,  4*32  , 11 );
-	A.msg1   = createTextActor( F.font1, data[1],  8*32,  5*32  , 11 );
-	A.msg2   = createTextActor( F.font1, data[2],  9*32,  5*32  , 11 );
-	A.msg3   = createTextActor( F.font1, data[3], 10*32,  5*32  , 11 );
-	A.msg4   = createTextActor( F.font1, data[4], 11*32,  5*32  , 11 );
+	A.cursor1= createTextActor( F.font1, "↓"   , viewX-2*32,  viewY-1*32  , 11 );
+	A.msg1   = createTextActor( F.font1, data[1], viewX-2*32,  viewY-0*32  , 11 );
+	A.msg2   = createTextActor( F.font1, data[2], viewX-1*32,  viewY-0*32  , 11 );
+	A.msg3   = createTextActor( F.font1, data[3], viewX+0*32,  viewY-0*32  , 11 );
+	A.msg4   = createTextActor( F.font1, data[4], viewX+1*32,  viewY-0*32  , 11 );
 end
 
 function h2_OnStep ()
@@ -88,18 +93,18 @@ function h2_OnStep ()
 	-- 2.アクター動作部
 
     if( flg_Cursor==1 )then
-    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, (viewCursor+8)*32, 4*32 )
+    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, viewX-2*32+(viewCursor)*32, viewY-1*32 )
     end
 
     if( flg_Head==1 )then
 		vanish(A.msg1);
-		A.msg1   = createTextActor( F.font1, data[viewHead+1],  8*32, 5*32, 11 );
+		A.msg1   = createTextActor( F.font1, data[viewHead+1], viewX-2*32, viewY-0*32, 11 );
 		vanish(A.msg2);
-		A.msg2   = createTextActor( F.font1, data[viewHead+2],  9*32, 5*32, 11 );
+		A.msg2   = createTextActor( F.font1, data[viewHead+2], viewX-1*32, viewY-0*32, 11 );
 		vanish(A.msg3);
-		A.msg3   = createTextActor( F.font1, data[viewHead+3], 10*32, 5*32, 11 );
+		A.msg3   = createTextActor( F.font1, data[viewHead+3], viewX+0*32, viewY-0*32, 11 );
 		vanish(A.msg4);
-		A.msg4   = createTextActor( F.font1, data[viewHead+4], 11*32, 5*32, 11 );
+		A.msg4   = createTextActor( F.font1, data[viewHead+4], viewX+1*32, viewY-0*32, 11 );
     end
     
     ::endFunc::
