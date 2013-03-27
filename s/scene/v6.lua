@@ -6,10 +6,10 @@ function v6_OnStart ()
 	-- 3.ì‡óe
 	data = { "Ç`", "Ça", "Çb", "Çc", "Çd", "Çe", "Çf" }
 	-- 4.óìÇÃï\é¶à íu
-	viewX     = 640/2 - 6*32
-	viewY     = 6* 32 +   32/2
-	viewWidth = 6* 32
-	viewHeight= 6* 32 +   16
+	viewX     = 4  * 32
+	viewY     = 6.5* 32
+	viewWidth = 6  * 32
+	viewHeight= 6.5* 32
 
 	-- 1.Ç‹Ç∏âÊëúÇì«Ç›çûÇﬁ
 	G.background   = loadGraphic("gfx/Bg_v6.png");
@@ -33,12 +33,12 @@ function v6_OnStart ()
 	set9patchGraphic( A.frame1, tbl1 )
    	addMover( A.frame1, -1, 50, MOVER_SETZOOM, viewWidth, viewHeight )
    	
-	A.cursor1= createTextActor( F.font1, "Å®"   , viewX - 1*32,  viewY     -32/2, 11 );
-	A.msg1   = createTextActor( F.font1, data[1], viewX       ,  viewY-2*32-32/2, 11 );
-	A.msg2   = createTextActor( F.font1, data[2], viewX       ,  viewY-1*32-32/2, 11 );
-	A.msg3   = createTextActor( F.font1, data[3], viewX       ,  viewY-0*32-32/2, 11 );
-	A.msg4   = createTextActor( F.font1, data[4], viewX       ,  viewY+1*32-32/2, 11 );
-	A.msg5   = createTextActor( F.font1, data[5], viewX       ,  viewY+2*32-32/2, 11 );
+	A.cursor1= createTextActor( F.font1, "Å®"   , -1*32+viewX,  -0.5*32+viewY, 11 );
+	A.msg1   = createTextActor( F.font1, data[1],       viewX,  -2.5*32+viewY, 11 );
+	A.msg2   = createTextActor( F.font1, data[2],       viewX,  -1.5*32+viewY, 11 );
+	A.msg3   = createTextActor( F.font1, data[3],       viewX,  -0.5*32+viewY, 11 );
+	A.msg4   = createTextActor( F.font1, data[4],       viewX,   0.5*32+viewY, 11 );
+	A.msg5   = createTextActor( F.font1, data[5],       viewX,   1.5*32+viewY, 11 );
 end
 
 function v6_OnStep ()
@@ -86,35 +86,35 @@ function v6_OnStep ()
 			vanish(A.msg1);
 		end
 		if( 1 <= viewHead+1 and viewHead+1 <= #data)then
-			A.msg1   = createTextActor( F.font1, data[viewHead+1], viewX, viewY-2*32-32/2, 11 );
+			A.msg1   = createTextActor( F.font1, data[viewHead+1], viewX, -2.5*32+viewY, 11 );
 		end
 
 		if(isAlive(A.msg2))then
 			vanish(A.msg2);
 		end
 		if( 1 <= viewHead+2 and viewHead+2 <= #data)then
-			A.msg2   = createTextActor( F.font1, data[viewHead+2], viewX, viewY-1*32-32/2, 11 );
+			A.msg2   = createTextActor( F.font1, data[viewHead+2], viewX, -1.5*32+viewY, 11 );
 		end
 		
 		if(isAlive(A.msg3))then
 			vanish(A.msg3);
 		end
 		if( 1 <= viewHead+3 and viewHead+3 <= #data)then
-			A.msg3   = createTextActor( F.font1, data[viewHead+3], viewX, viewY-0*32-32/2, 11 );
+			A.msg3   = createTextActor( F.font1, data[viewHead+3], viewX, -0.5*32+viewY, 11 );
 		end
 		
 		if(isAlive(A.msg4))then
 			vanish(A.msg4);
 		end
 		if( 1 <= viewHead+4 and viewHead+4 <= #data)then
-			A.msg4   = createTextActor( F.font1, data[viewHead+4], viewX, viewY+1*32-32/2, 11 );
+			A.msg4   = createTextActor( F.font1, data[viewHead+4], viewX,  0.5*32+viewY, 11 );
 		end
 		
 		if(isAlive(A.msg5))then
 			vanish(A.msg5);
 		end
 		if( 1 <= viewHead+5 and viewHead+5 <= #data)then
-			A.msg5   = createTextActor( F.font1, data[viewHead+5], viewX, viewY+2*32-32/2, 11 );
+			A.msg5   = createTextActor( F.font1, data[viewHead+5], viewX,  1.5*32+viewY, 11 );
 		end
     end
 

@@ -28,12 +28,12 @@ function h6_OnStart ()
 	set9patchGraphic( A.frame1, tbl1 )
    	addMover( A.frame1, -1, 50, MOVER_SETZOOM, 176+32, 200 )
    	
-	A.cursor1= createTextActor( F.font1, "↓"   , 10*32-32/2,  4*32  , 11 );
-	A.msg1   = createTextActor( F.font1, data[1],  8*32-32/2,  5*32  , 11 );
-	A.msg2   = createTextActor( F.font1, data[2],  9*32-32/2,  5*32  , 11 );
-	A.msg3   = createTextActor( F.font1, data[3], 10*32-32/2,  5*32  , 11 );
-	A.msg4   = createTextActor( F.font1, data[4], 11*32-32/2,  5*32  , 11 );
-	A.msg5   = createTextActor( F.font1, data[5], 12*32-32/2,  5*32  , 11 );
+	A.cursor1= createTextActor( F.font1, "↓"   ,  9.5*32,  4*32, 11 );
+	A.msg1   = createTextActor( F.font1, data[1],  7.5*32,  5*32, 11 );
+	A.msg2   = createTextActor( F.font1, data[2],  8.5*32,  5*32, 11 );
+	A.msg3   = createTextActor( F.font1, data[3],  9.5*32,  5*32, 11 );
+	A.msg4   = createTextActor( F.font1, data[4], 10.5*32,  5*32, 11 );
+	A.msg5   = createTextActor( F.font1, data[5], 11.5*32,  5*32, 11 );
 end
 
 function h6_OnStep ()
@@ -77,7 +77,7 @@ function h6_OnStep ()
 	-- 2.アクター動作部
 
     if( flg_Cursor==1 )then
-    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, (VIEW_CURSOR+8)*32-32/2, 4*32 )
+    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, (VIEW_CURSOR+7.5)*32, 4*32 )
     end
 
     if( flg_Head==1 )then
@@ -85,35 +85,35 @@ function h6_OnStep ()
 			vanish(A.msg1);
 		end
 		if( 1 <= viewHead+1 and viewHead+1 <= #data)then
-			A.msg1   = createTextActor( F.font1, data[viewHead+1],  8*32-32/2, 5*32, 11 );
+			A.msg1   = createTextActor( F.font1, data[viewHead+1],  7.5*32, 5*32, 11 );
 		end
 
 		if(isAlive(A.msg2))then
 			vanish(A.msg2);
 		end
 		if( 1 <= viewHead+2 and viewHead+2 <= #data)then
-			A.msg2   = createTextActor( F.font1, data[viewHead+2],  9*32-32/2, 5*32, 11 );
+			A.msg2   = createTextActor( F.font1, data[viewHead+2],  8.5*32, 5*32, 11 );
 		end
 		
 		if(isAlive(A.msg3))then
 			vanish(A.msg3);
 		end
 		if( 1 <= viewHead+3 and viewHead+3 <= #data)then
-			A.msg3   = createTextActor( F.font1, data[viewHead+3], 10*32-32/2, 5*32, 11 );
+			A.msg3   = createTextActor( F.font1, data[viewHead+3],  9.5*32, 5*32, 11 );
 		end
 		
 		if(isAlive(A.msg4))then
 			vanish(A.msg4);
 		end
 		if( 1 <= viewHead+4 and viewHead+4 <= #data)then
-			A.msg4   = createTextActor( F.font1, data[viewHead+4], 11*32-32/2, 5*32, 11 );
+			A.msg4   = createTextActor( F.font1, data[viewHead+4], 10.5*32, 5*32, 11 );
 		end
 		
 		if(isAlive(A.msg5))then
 			vanish(A.msg5);
 		end
 		if( 1 <= viewHead+5 and viewHead+5 <= #data)then
-			A.msg5   = createTextActor( F.font1, data[viewHead+5], 12*32-32/2, 5*32, 11 );
+			A.msg5   = createTextActor( F.font1, data[viewHead+5], 11.5*32, 5*32, 11 );
 		end
     end
     

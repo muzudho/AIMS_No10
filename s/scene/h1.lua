@@ -35,11 +35,11 @@ function h1_OnStart ()
 	set9patchGraphic( A.frame1, tbl1 )
    	addMover( A.frame1, -1, 50, MOVER_SETZOOM, viewWidth, viewHeight )
    	
-	A.cursor1= createTextActor( F.font1, "↓"   , viewX-2*32,  viewY-1*32  , 11 );
-	A.msg1   = createTextActor( F.font1, data[1], viewX-2*32,  viewY-0*32  , 11 );
-	A.msg2   = createTextActor( F.font1, data[2], viewX-1*32,  viewY-0*32  , 11 );
-	A.msg3   = createTextActor( F.font1, data[3], viewX+0*32,  viewY-0*32  , 11 );
-	A.msg4   = createTextActor( F.font1, data[4], viewX+1*32,  viewY-0*32  , 11 );
+	A.cursor1= createTextActor( F.font1, "↓"   , -2*32+viewX,  -1*32+viewY, 11 );
+	A.msg1   = createTextActor( F.font1, data[1], -2*32+viewX,   0*32+viewY, 11 );
+	A.msg2   = createTextActor( F.font1, data[2], -1*32+viewX,   0*32+viewY, 11 );
+	A.msg3   = createTextActor( F.font1, data[3],  0*32+viewX,   0*32+viewY, 11 );
+	A.msg4   = createTextActor( F.font1, data[4],  1*32+viewX,   0*32+viewY, 11 );
 end
 
 function h1_OnStep ()
@@ -83,7 +83,7 @@ function h1_OnStep ()
 	-- 2.アクター動作部
 
     if( flg_Cursor==1 )then
-    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, viewX-2*32+(viewCursor)*32, viewY-1*32 )
+    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, (viewCursor-2)*32+viewX, -1*32+viewY )
     end
     
     ::endFunc::

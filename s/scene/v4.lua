@@ -10,9 +10,9 @@ function v4_OnStart ()
 			 "Çg", "Çh", "Çi", "Çj", "Çk", "Çl", "Çm" }
 	-- 4.óìÇÃï\é¶à íu
 	viewX     = 17.5* 32
-	viewY     =  3* 32  +32/2
-	viewWidth =  4    * 32
-	viewHeight=  5.5  * 32
+	viewY     =  3.5* 32
+	viewWidth =  4  * 32
+	viewHeight=  5.5* 32
 
 	-- 1.Ç‹Ç∏âÊëúÇì«Ç›çûÇﬁ
 	G.background   = loadGraphic("gfx/Bg_v4.png");
@@ -36,15 +36,15 @@ function v4_OnStart ()
 	set9patchGraphic( A.frame1, tbl1 )
    	addMover( A.frame1, -1, 50, MOVER_SETZOOM, viewWidth, viewHeight )
    	
-	A.cursor1= createTextActor( F.font1, "Å®"   , viewX - 1*32, viewY-2*32-32/2, 11 );
-	A.msg1   = createTextActor( F.font1, data[1], viewX       , viewY-2*32-32/2, 11 );
-	A.msg2   = createTextActor( F.font1, data[2], viewX       , viewY-1*32-32/2, 11 );
-	A.msg3   = createTextActor( F.font1, data[3], viewX       , viewY+0*32-32/2, 11 );
-	A.msg4   = createTextActor( F.font1, data[4], viewX       , viewY+1*32-32/2, 11 );
+	A.cursor1= createTextActor( F.font1, "Å®"   , -0.5*32+viewX, -2.5*32+viewY, 11 );
+	A.msg1   = createTextActor( F.font1, data[1],         viewX, -2.5*32+viewY, 11 );
+	A.msg2   = createTextActor( F.font1, data[2],         viewX, -1.5*32+viewY, 11 );
+	A.msg3   = createTextActor( F.font1, data[3],         viewX, -0.5*32+viewY, 11 );
+	A.msg4   = createTextActor( F.font1, data[4],         viewX,  0.5*32+viewY, 11 );
 	--ÉyÅ[ÉWêî
 	str = currentPage( 1, VIEW_LAST, viewCursor+viewHead ) .."Å^".. totalPage( VIEW_LAST, #data)
 	strw= getTextWidth(F.font1, str, false);
-	A.msg5   = createTextActor( F.font1, str      , viewX-strw/2, viewY+2*32-32/2, 11 );
+	A.msg5   = createTextActor( F.font1, str      , viewX-strw/2, 1.5*32+viewY, 11 );
 end
 
 function v4_OnStep ()
@@ -110,7 +110,7 @@ function v4_OnStep ()
 	-- 2.ÉAÉNÉ^Å[ìÆçÏïî
 
     if( flg_Cursor==1 )then
-    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, viewX - 1*32, viewY+(viewCursor-3)*32  +32/2 )
+    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, -1*32+viewX, (viewCursor-2.5)*32+viewY )
     end
 
     if( flg_Head==1 )then
@@ -118,28 +118,28 @@ function v4_OnStep ()
 			vanish(A.msg1);
 		end
 		if( 1 <= viewHead+1 and viewHead+1 <= #data)then
-			A.msg1   = createTextActor( F.font1, data[viewHead+1], viewX       ,  viewY-2*32-32/2, 11 );
+			A.msg1   = createTextActor( F.font1, data[viewHead+1], viewX,  -2.5*32+viewY, 11 );
 		end
 
 		if(isAlive(A.msg2))then
 			vanish(A.msg2);
 		end
 		if( 1 <= viewHead+2 and viewHead+2 <= #data)then
-			A.msg2   = createTextActor( F.font1, data[viewHead+2], viewX       ,  viewY-1*32-32/2, 11 );
+			A.msg2   = createTextActor( F.font1, data[viewHead+2], viewX,  -1.5*32+viewY, 11 );
 		end
 		
 		if(isAlive(A.msg3))then
 			vanish(A.msg3);
 		end
 		if( 1 <= viewHead+3 and viewHead+3 <= #data)then
-			A.msg3   = createTextActor( F.font1, data[viewHead+3], viewX       ,  viewY+0*32-32/2, 11 );
+			A.msg3   = createTextActor( F.font1, data[viewHead+3], viewX,  -0.5*32+viewY, 11 );
 		end
 		
 		if(isAlive(A.msg4))then
 			vanish(A.msg4);
 		end
 		if( 1 <= viewHead+4 and viewHead+4 <= #data)then
-			A.msg4   = createTextActor( F.font1, data[viewHead+4], viewX       ,  viewY+1*32-32/2, 11 );
+			A.msg4   = createTextActor( F.font1, data[viewHead+4], viewX,   0.5*32+viewY, 11 );
 		end
 		
 		--ÉyÅ[ÉWêî
@@ -148,7 +148,7 @@ function v4_OnStep ()
 		end
 		str = currentPage( 1, VIEW_LAST, viewCursor+viewHead ) .."Å^".. totalPage( VIEW_LAST, #data)
 		strw= getTextWidth(F.font1, str, false);
-		A.msg5   = createTextActor( F.font1, str      , viewX-strw/2,  viewY+2*32-32/2, 11 );
+		A.msg5   = createTextActor( F.font1, str      , viewX-strw/2,  1.5*32+viewY, 11 );
     end
 
     ::endFunc::

@@ -8,10 +8,10 @@ function v0_OnStart ()
 	-- 3.ì‡óe
 	data = { "Ç`", "Ça", "Çb", "Çc" }
 	-- 4.óìÇÃï\é¶à íu
-	viewX     = 640/2
-	viewY     = 2.5* 32+8
-	viewWidth = 4  * 32
-	viewHeight= 5  * 32
+	viewX     = 10   * 32
+	viewY     =  2.75* 32
+	viewWidth =  4   * 32
+	viewHeight=  5   * 32
 
 	-- 1.Ç‹Ç∏âÊëúÇì«Ç›çûÇﬁ
 	G.background   = loadGraphic("gfx/Bg_v0.png");
@@ -35,11 +35,11 @@ function v0_OnStart ()
 	set9patchGraphic( A.frame1, tbl1 )
    	addMover( A.frame1, -1, 50, MOVER_SETZOOM, viewWidth, viewHeight )
    	
-	A.cursor1= createTextActor( F.font1, "Å®"   , viewX - 1*32,  viewY-2*32  , 11 );
-	A.msg1   = createTextActor( F.font1, data[1], viewX       ,  viewY-2*32  , 11 );
-	A.msg2   = createTextActor( F.font1, data[2], viewX       ,  viewY-1*32  , 11 );
-	A.msg3   = createTextActor( F.font1, data[3], viewX       ,  viewY+0*32  , 11 );
-	A.msg4   = createTextActor( F.font1, data[4], viewX       ,  viewY+1*32  , 11 );
+	A.cursor1= createTextActor( F.font1, "Å®"   , -1*32+viewX,  -2*32+viewY, 11 );
+	A.msg1   = createTextActor( F.font1, data[1],       viewX,  -2*32+viewY, 11 );
+	A.msg2   = createTextActor( F.font1, data[2],       viewX,  -1*32+viewY, 11 );
+	A.msg3   = createTextActor( F.font1, data[3],       viewX,   0*32+viewY, 11 );
+	A.msg4   = createTextActor( F.font1, data[4],       viewX,   1*32+viewY, 11 );
 end
 
 function v0_OnStep ()
@@ -79,7 +79,7 @@ function v0_OnStep ()
 	-- 2.ÉAÉNÉ^Å[ìÆçÏïî
 
     if( flg_Cursor==1 )then
-    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, viewX - 1*32, viewY-6*32+(viewCursor + 4)*32 )
+    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, -1*32+viewX, (viewCursor-2)*32+viewY )
     end
     
     ::endFunc::

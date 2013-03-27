@@ -35,11 +35,11 @@ function v2_OnStart ()
 	set9patchGraphic( A.frame1, tbl1 )
    	addMover( A.frame1, -1, 50, MOVER_SETZOOM, viewWidth, viewHeight )
    	
-	A.cursor1= createTextActor( F.font1, "→"   , viewX - 1*32, viewY-2*32  , 11 );
-	A.msg1   = createTextActor( F.font1, data[1], viewX       ,  viewY-2*32  , 11 );
-	A.msg2   = createTextActor( F.font1, data[2], viewX       ,  viewY-1*32  , 11 );
-	A.msg3   = createTextActor( F.font1, data[3], viewX       ,  viewY+0*32  , 11 );
-	A.msg4   = createTextActor( F.font1, data[4], viewX       ,  viewY+1*32  , 11 );
+	A.cursor1= createTextActor( F.font1, "→"   , -1*32+viewX, -2*32+viewY, 11 );
+	A.msg1   = createTextActor( F.font1, data[1],       viewX, -2*32+viewY, 11 );
+	A.msg2   = createTextActor( F.font1, data[2],       viewX, -1*32+viewY, 11 );
+	A.msg3   = createTextActor( F.font1, data[3],       viewX,  0*32+viewY, 11 );
+	A.msg4   = createTextActor( F.font1, data[4],       viewX,  1*32+viewY, 11 );
 end
 
 function v2_OnStep ()
@@ -93,18 +93,18 @@ function v2_OnStep ()
 	-- 2.アクター動作部
 
     if( flg_Cursor==1 )then
-    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, viewX - 1*32, (viewCursor + 4)*32 )
+    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, -1*32+viewX, (viewCursor + 4)*32 )
     end
 
     if( flg_Head==1 )then
 		vanish(A.msg1);
-		A.msg1   = createTextActor( F.font1, data[viewHead+1], viewX       ,  viewY-2*32  , 11 );
+		A.msg1   = createTextActor( F.font1, data[viewHead+1], viewX,  -2*32+viewY, 11 );
 		vanish(A.msg2);
-		A.msg2   = createTextActor( F.font1, data[viewHead+2], viewX       ,  viewY-1*32  , 11 );
+		A.msg2   = createTextActor( F.font1, data[viewHead+2], viewX,  -1*32+viewY, 11 );
 		vanish(A.msg3);
-		A.msg3   = createTextActor( F.font1, data[viewHead+3], viewX       ,  viewY+0*32  , 11 );
+		A.msg3   = createTextActor( F.font1, data[viewHead+3], viewX,   0*32+viewY, 11 );
 		vanish(A.msg4);
-		A.msg4   = createTextActor( F.font1, data[viewHead+4], viewX       ,  viewY+1*32  , 11 );
+		A.msg4   = createTextActor( F.font1, data[viewHead+4], viewX,   1*32+viewY, 11 );
     end
 
     ::endFunc::

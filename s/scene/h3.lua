@@ -36,15 +36,15 @@ function h3_OnStart ()
 	set9patchGraphic( A.frame1, tbl1 )
    	addMover( A.frame1, -1, 50, MOVER_SETZOOM, viewWidth, viewHeight )
    	
-	A.cursor1= createTextActor( F.font1, "↓"   , viewX-2*32,  viewY-1.5*32  , 11 );
-	A.msg1   = createTextActor( F.font1, data[1], viewX-2*32,  viewY-0.5*32  , 11 );
-	A.msg2   = createTextActor( F.font1, data[2], viewX-1*32,  viewY-0.5*32  , 11 );
-	A.msg3   = createTextActor( F.font1, data[3], viewX+0*32,  viewY-0.5*32  , 11 );
-	A.msg4   = createTextActor( F.font1, data[4], viewX+1*32,  viewY-0.5*32  , 11 );
+	A.cursor1= createTextActor( F.font1, "↓"   , -2*32+viewX,  -1.5*32+viewY  , 11 );
+	A.msg1   = createTextActor( F.font1, data[1], -2*32+viewX,  -0.5*32+viewY  , 11 );
+	A.msg2   = createTextActor( F.font1, data[2], -1*32+viewX,  -0.5*32+viewY  , 11 );
+	A.msg3   = createTextActor( F.font1, data[3],  0*32+viewX,  -0.5*32+viewY  , 11 );
+	A.msg4   = createTextActor( F.font1, data[4],  1*32+viewX,  -0.5*32+viewY  , 11 );
 	--ページ数
 	str = currentPage( 1, VIEW_LAST, viewCursor+viewHead ) .."／".. totalPage( VIEW_LAST, #data)
 	strw= getTextWidth(F.font1, str, false);
-	A.msg5   = createTextActor( F.font1, str    , viewX-strw/2,  viewY+0.5*32  , 11 );
+	A.msg5   = createTextActor( F.font1, str    , viewX-strw/2,  0.5*32+viewY  , 11 );
 end
 
 function h3_OnStep ()
@@ -102,7 +102,7 @@ function h3_OnStep ()
 	-- 2.アクター動作部
 
     if( flg_Cursor==1 )then
-    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, viewX-2*32+(viewCursor)*32, viewY-1.5*32 )
+    	addMover( A.cursor1, -1, 1, MOVER_SETPOSITION, (viewCursor-2)*32+viewX, -1.5*32+viewY )
     end
 
     if( flg_Head==1 )then
@@ -110,28 +110,28 @@ function h3_OnStep ()
 			vanish(A.msg1);
 		end
 		if( 1 <= viewHead+1 and viewHead+1 <= #data)then
-			A.msg1   = createTextActor( F.font1, data[viewHead+1], viewX-2*32, viewY-0.5*32, 11 );
+			A.msg1   = createTextActor( F.font1, data[viewHead+1], -2*32+viewX, -0.5*32+viewY, 11 );
 		end
 
 		if(isAlive(A.msg2))then
 			vanish(A.msg2);
 		end
 		if( 1 <= viewHead+2 and viewHead+2 <= #data)then
-			A.msg2   = createTextActor( F.font1, data[viewHead+2], viewX-1*32, viewY-0.5*32, 11 );
+			A.msg2   = createTextActor( F.font1, data[viewHead+2], -1*32+viewX, -0.5*32+viewY, 11 );
 		end
 		
 		if(isAlive(A.msg3))then
 			vanish(A.msg3);
 		end
 		if( 1 <= viewHead+3 and viewHead+3 <= #data)then
-			A.msg3   = createTextActor( F.font1, data[viewHead+3], viewX+0*32, viewY-0.5*32, 11 );
+			A.msg3   = createTextActor( F.font1, data[viewHead+3],  0*32+viewX, -0.5*32+viewY, 11 );
 		end
 		
 		if(isAlive(A.msg4))then
 			vanish(A.msg4);
 		end
 		if( 1 <= viewHead+4 and viewHead+4 <= #data)then
-			A.msg4   = createTextActor( F.font1, data[viewHead+4], viewX+1*32, viewY-0.5*32, 11 );
+			A.msg4   = createTextActor( F.font1, data[viewHead+4],  1*32+viewX, -0.5*32+viewY, 11 );
 		end
 		
 		--ページ数
@@ -140,7 +140,7 @@ function h3_OnStep ()
 		end
 		str = currentPage( 1, VIEW_LAST, viewCursor+viewHead ) .."／".. totalPage( VIEW_LAST, #data)
 		strw= getTextWidth(F.font1, str, false);
-		A.msg5   = createTextActor( F.font1, str    , viewX-strw/2,  viewY+0.5*32  , 11 );
+		A.msg5   = createTextActor( F.font1, str    , viewX-strw/2,  0.5*32+viewY  , 11 );
     end
     
     ::endFunc::
